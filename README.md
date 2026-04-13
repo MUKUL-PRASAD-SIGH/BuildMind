@@ -118,21 +118,28 @@ your-project/
 
 ---
 
-## 🚀 Quick Start (Zero Config)
+## 🚀 Quick Start
 
+**Option A: IDE-Native (Zero Config, No API Keys)**
+Connect BuildMind to your IDE's AI (like Cursor or Antigravity):
 ```bash
-# Install
 pip install buildmind
+buildmind serve --mcp
+```
+*(See [IDE Integration Guide](./docs/15-ide-integration.md) for setup instructions)*
 
-# Initialize in your project (creates .buildmind/config.yaml)
-cd your-project/
+**Option B: Standalone CLI**
+Run directly in your terminal (requires your own API key):
+```bash
+pip install buildmind
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Initialize in your project
 buildmind init
 
 # Start building
 buildmind start "Build whatever you're working on"
 ```
-
-No API keys. No `.env` file. BuildMind uses your IDE's model access automatically.
 
 ---
 

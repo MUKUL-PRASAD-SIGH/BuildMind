@@ -273,13 +273,21 @@ def status() -> None:
     print_project_status(project, tasks, decisions)
 
 
+@app.command(name="continue")
+def continue_cmd(
+    mock: bool = typer.Option(False, "--mock", help="Use mock decision cards (no API key needed)"),
+) -> None:
+    """Alias for resume."""
+    resume(mock=mock)
+
+
 @app.command()
 def resume(
     mock: bool = typer.Option(False, "--mock", help="Use mock decision cards (no API key needed)"),
 ) -> None:
     """
     Resume a project -- work through decision gates interactively.
-
+    
     For each HUMAN_REQUIRED task (in dependency order):
       - Shows a decision card with options, AI suggestion, and impact areas
       - Accepts: number, explain <n>, compare <a> <b>, why, custom, spec, skip

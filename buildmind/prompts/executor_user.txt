@@ -1,0 +1,13 @@
+Project: ${project_id}
+Intent: ${intent}
+Tech context: ${context}
+
+Decisions already made (Project Spec):
+${spec_json}
+
+Your task to execute:
+Task ID: ${task_id}
+Title: ${task_title}
+Description: ${task_description}
+
+Write the code for this task. Return ONLY the JSON object conforming exactly to the system prompt's instructions.

@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "buildmind"
+version = "0.1.0"
+description = "AI Thinking Infrastructure — orchestrate human decisions and AI execution in your IDE"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["ai", "orchestration", "cli", "mcp", "llm"]
+
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+    "prompt-toolkit>=3.0.43",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.2.0",
+    "httpx>=0.27.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0.1",
+    "anthropic>=0.25.0",
+    "openai>=1.20.0",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=0.9.0"]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23", "black", "ruff"]
+
+[project.scripts]
+buildmind = "buildmind.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["buildmind*"]
+
+[tool.setuptools.package-data]
+buildmind = ["prompts/*.txt"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]

@@ -1,0 +1,13 @@
+Project: ${project_id}
+Intent: ${intent}
+Tech context: ${context}
+
+Decisions already made (project spec so far):
+${spec_json}
+
+Now generate a decision card for this task:
+Task ID: ${task_id}
+Task title: ${task_title}
+Task description: ${task_description}
+
+Generate 3-5 options, an AI suggestion, and all required fields. Return ONLY the JSON object.

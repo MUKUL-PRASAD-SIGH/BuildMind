@@ -1,0 +1,7 @@
+Project ID: ${project_id}
+User Intent: ${intent}
+
+Tasks to classify:
+${tasks_json}
+
+Classify each task. Return ONLY a JSON object with a "classifications" array as specified. No markdown, no explanation outside the JSON.

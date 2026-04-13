@@ -1,0 +1,17 @@
+Project Goal: {intent}
+
+Component: {task_title}
+
+Code generated:
+```
+{code_output}
+```
+
+Decisions that shaped this code:
+```json
+{spec_json}
+```
+
+User expertise level: Intermediate
+
+Generate a ComponentExplanation as valid JSON for this code.

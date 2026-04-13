@@ -1,0 +1,10 @@
+Project ID: ${project_id}
+
+User Intent: ${intent}
+
+Additional Context:
+${context}
+
+Mode: ${mode}
+
+Break this intent into atomic engineering tasks. Return ONLY the JSON object with a "tasks" array as specified. No markdown, no explanation outside the JSON.

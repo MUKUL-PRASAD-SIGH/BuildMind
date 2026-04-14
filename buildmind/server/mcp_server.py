@@ -87,7 +87,7 @@ def _run_cli_captured(fn, *args, **kwargs) -> tuple[str, str | None]:
 # ── Tool: buildmind_start ─────────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_start(intent: str, project_dir: str, ctx: Context[ServerSession, None]) -> str:
+def buildmind_start(intent: str, ctx: Context[ServerSession, None], project_dir: str = "") -> str:
     """
     Start a new BuildMind project from your intent.
 
@@ -146,7 +146,7 @@ def buildmind_start(intent: str, project_dir: str, ctx: Context[ServerSession, N
 # ── Tool: buildmind_resume ────────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_resume(project_dir: str, ctx: Context[ServerSession, None]) -> str:
+def buildmind_resume(ctx: Context[ServerSession, None], project_dir: str = "") -> str:
     """
     Resume the BuildMind project — generate decision cards for HUMAN_REQUIRED tasks.
 
@@ -237,8 +237,8 @@ def buildmind_resume(project_dir: str, ctx: Context[ServerSession, None]) -> str
 def buildmind_decide(
     task_id: str,
     option_number: int,
-    project_dir: str,
     ctx: Context[ServerSession, None],
+    project_dir: str = "",
 ) -> str:
     """
     Record your decision for a HUMAN_REQUIRED task.
@@ -306,7 +306,7 @@ def buildmind_decide(
 # ── Tool: buildmind_execute ───────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_execute(project_dir: str, ctx: Context[ServerSession, None]) -> str:
+def buildmind_execute(ctx: Context[ServerSession, None], project_dir: str = "") -> str:
     """
     Execute all ready AI tasks — generates and writes code files.
 
@@ -377,7 +377,7 @@ def buildmind_execute(project_dir: str, ctx: Context[ServerSession, None]) -> st
 # ── Tool: buildmind_status ────────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_status(project_dir: str, ctx: Context[ServerSession, None]) -> str:
+def buildmind_status(ctx: Context[ServerSession, None], project_dir: str = "") -> str:
     """
     Show current BuildMind project status — tasks, decisions, and progress.
     """

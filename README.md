@@ -1,11 +1,16 @@
 # 🧠 BuildMind
 
-> **AI Thinking Infrastructure** — the operating system for human-AI collaborative engineering, running directly in your IDE terminal.
+[![PyPI version](https://img.shields.io/pypi/v/buildmind.svg)](https://pypi.org/project/buildmind/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Published on PyPI](https://img.shields.io/badge/Published%20on-PyPI-blue)](https://pypi.org/project/buildmind/)
+
+> **AI Thinking Infrastructure** — the operating system for human-AI collaborative engineering, running directly in your IDE via the novel Inverted MCP Architecture.
 
 ```
-Human     = Strategy  (you make decisions, in your terminal)
-AI        = Execution (models already in your IDE — no API keys)
-BuildMind = Orchestrator (runs the pipeline, enforces rules)
+Human     = Strategy  (you make architectural decisions)
+AI        = Execution (code generation via IDE's model — no API keys)
+BuildMind = Orchestrator (runs the pipeline, enforces rules, proxies LLM calls)
 ```
 
 ---

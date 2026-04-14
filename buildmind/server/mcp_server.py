@@ -36,12 +36,20 @@ mcp = FastMCP(
 )
 
 
-def _activate_mcp_session(ctx: Context[ServerSession, None]) -> None:
+def _activate_mcp_session(ctx: Context[ServerSession, None], project_dir: str = "") -> None:
     """
     Register the live MCP session into the LLM client.
     After this call, all LLMClient.complete_sync() calls in this thread
     will use sampling/createMessage to ask the IDE for completions.
     """
+    if project_dir:
+        import os
+        try:
+            os.makedirs(project_dir, exist_ok=True)
+            os.chdir(project_dir)
+        except Exception as e:
+            pass # fallback to current dir if failing
+            
     # Set both the global (for backward compat) and the ContextVar (for isolation)
     llm_client.ACTIVE_MCP_SESSION = ctx.session
     llm_client.set_mcp_session(ctx.session)
@@ -79,7 +87,7 @@ def _run_cli_captured(fn, *args, **kwargs) -> tuple[str, str | None]:
 # ── Tool: buildmind_start ─────────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_start(intent: str, ctx: Context[ServerSession, None]) -> str:
+def buildmind_start(intent: str, project_dir: str, ctx: Context[ServerSession, None]) -> str:
     """
     Start a new BuildMind project from your intent.
 
@@ -92,7 +100,7 @@ def buildmind_start(intent: str, ctx: Context[ServerSession, None]) -> str:
     Returns a summary of the generated task plan.
     Next step: call buildmind_resume to work through architectural decisions.
     """
-    _activate_mcp_session(ctx)
+    _activate_mcp_session(ctx, project_dir)
 
     import buildmind.cli as cli
     from buildmind.storage.project_store import load_tasks, load_project
@@ -138,7 +146,7 @@ def buildmind_start(intent: str, ctx: Context[ServerSession, None]) -> str:
 # ── Tool: buildmind_resume ────────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_resume(ctx: Context[ServerSession, None]) -> str:
+def buildmind_resume(project_dir: str, ctx: Context[ServerSession, None]) -> str:
     """
     Resume the BuildMind project — generate decision cards for HUMAN_REQUIRED tasks.
 
@@ -147,7 +155,7 @@ def buildmind_resume(ctx: Context[ServerSession, None]) -> str:
 
     You (the IDE/user) should review the card and call buildmind_decide with your choice.
     """
-    _activate_mcp_session(ctx)
+    _activate_mcp_session(ctx, project_dir)
 
     from buildmind.config.settings import load_config
     from buildmind.storage.project_store import load_project, load_tasks, load_decisions
@@ -229,6 +237,7 @@ def buildmind_resume(ctx: Context[ServerSession, None]) -> str:
 def buildmind_decide(
     task_id: str,
     option_number: int,
+    project_dir: str,
     ctx: Context[ServerSession, None],
 ) -> str:
     """
@@ -237,7 +246,7 @@ def buildmind_decide(
     After calling buildmind_resume to see the decision card,
     call this with the task_id and the option number you choose.
     """
-    _activate_mcp_session(ctx)
+    _activate_mcp_session(ctx, project_dir)
 
     from buildmind.config.settings import load_config
     from buildmind.storage.project_store import (
@@ -297,7 +306,7 @@ def buildmind_decide(
 # ── Tool: buildmind_execute ───────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_execute(ctx: Context[ServerSession, None]) -> str:
+def buildmind_execute(project_dir: str, ctx: Context[ServerSession, None]) -> str:
     """
     Execute all ready AI tasks — generates and writes code files.
 
@@ -308,7 +317,7 @@ def buildmind_execute(ctx: Context[ServerSession, None]) -> str:
 
     Returns a summary of all files written.
     """
-    _activate_mcp_session(ctx)
+    _activate_mcp_session(ctx, project_dir)
 
     from buildmind.config.settings import load_config
     from buildmind.storage.project_store import (
@@ -368,11 +377,11 @@ def buildmind_execute(ctx: Context[ServerSession, None]) -> str:
 # ── Tool: buildmind_status ────────────────────────────────────────────────────
 
 @mcp.tool()
-def buildmind_status(ctx: Context[ServerSession, None]) -> str:
+def buildmind_status(project_dir: str, ctx: Context[ServerSession, None]) -> str:
     """
     Show current BuildMind project status — tasks, decisions, and progress.
     """
-    _activate_mcp_session(ctx)
+    _activate_mcp_session(ctx, project_dir)
 
     from buildmind.storage.project_store import load_project, load_tasks, load_decisions
 
